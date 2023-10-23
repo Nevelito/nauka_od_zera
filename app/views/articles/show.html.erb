@@ -1,0 +1,17 @@
+<div class="flex flex-col">
+  <h1 class="text-4xl"><%= @article.title %></h1>
+  <h1 class="text-2xl"><%= @article.entry %></h1>
+  <p><%= @article.contents %></p>
+  <p><%= @article.user_id %></p>
+  <%= link_to "Back to Articles", articles_path, class: "btn btn-primary border border-gray-300 p-1 rounded mt-4" %>
+
+
+  <% if user_signed_in? %>
+    <% if current_user.subscribed_articles.include?(@article) %>
+      <%= button_to 'Unsubscribe', subscription_path(@article.subscriptions.find_by(user: current_user)), method: :delete, class:"border border-red-300 p-1 rounded mt-4" %>
+    <% else %>
+      <%= button_to 'Subscribe', subscriptions_path(article_id: @article.id), method: :post, class:"border border-red-300 p-1 rounded mt-4" %>
+    <% end %>
+  <% end %>
+</div>
+

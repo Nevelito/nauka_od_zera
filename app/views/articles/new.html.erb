@@ -1,0 +1,31 @@
+<div class="grid grid-cols">
+  <h1 class="flex flex-col items-center text-xl">Create a New Article</h1>
+
+  <%= form_for @article do |f| %>
+    <div class="field mt-4">
+      <div class="flex flex-col items-center">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+      </div>
+    </div>
+
+    <div class="field mt-4">
+      <div class="flex flex-col items-center">
+        <%= f.label :entry %>
+        <%= f.text_area :entry %>
+      </div>
+    </div>
+
+    <div class="field mt-4">
+      <div class="flex flex-col items-center">
+        <%= f.label :contents %>
+        <%= f.text_area :contents %>
+      </div>
+    </div>
+
+    <div class="flex space-x-4  actions mt-4">
+      <%= f.submit 'Create Article', class: " border border-green-300 p-1 rounded" %>
+      <%=link_to "Back", articles_path, class:"border border-gray-300 p-1 rounded " %>
+    </div>
+  <% end %>
+</div>

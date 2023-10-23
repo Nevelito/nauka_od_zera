@@ -1,0 +1,31 @@
+<div class="grid grid-cols">
+  <h1>List of Articles</h1>
+  <div class="grid grid-cols ml-8 mt-4">
+    <% if user_signed_in? %>
+      <% @articles.each do |article| %>
+        <li><%= link_to article.title, article %></li>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="grid grid-rows gap-4 mt-4">
+    <% if user_signed_in? %>
+      <div class="flex space-x-4">
+        <%= button_to 'Sign Out', destroy_user_session_path, method: :delete , class: "border border-red-300 p-1 rounded" %>
+        <%= link_to "Change Password", edit_user_registration_path , class: "border border-blue-300 p-1 rounded"%>
+      </div>
+    <% else %>
+      <div class="flex space-x-4">
+        <%= button_to "Log in", user_session_path , class: "border border-green-300 p-1 rounded"%>
+        <%= button_to "Sign In", new_user_registration_path, class: "border border-gray-300 p-1 rounded" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="mt-4">
+    <%=link_to "Create New Article", new_article_path, class:"border border-gray-300 p-1 rounded mt-4" %>
+  </div>
+
+  <div class="mt-4">
+    <%=current_user.points%>
+  </div>
+
+</div>
