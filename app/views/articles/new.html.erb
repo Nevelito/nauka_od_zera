@@ -23,6 +23,8 @@
       </div>
     </div>
 
+    <%= f.hidden_field :user_id, value: current_user.id %>
+
     <div class="flex space-x-4  actions mt-4">
       <%= f.submit 'Create Article', class: " border border-green-300 p-1 rounded" %>
       <%=link_to "Back", articles_path, class:"border border-gray-300 p-1 rounded " %>

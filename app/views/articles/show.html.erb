@@ -8,7 +8,8 @@
 
   <% if user_signed_in? %>
     <% if current_user.subscribed_articles.include?(@article) %>
-      <%= button_to 'Unsubscribe', subscription_path(@article.subscriptions.find_by(user: current_user)), method: :delete, class:"border border-red-300 p-1 rounded mt-4" %>
+      <%= button_to 'Unsubscribe', subscription_path(article_id: @article.id), method: :delete, class:"border border-red-300 p-1 rounded mt-4" %>
+
     <% else %>
       <%= button_to 'Subscribe', subscriptions_path(article_id: @article.id), method: :post, class:"border border-red-300 p-1 rounded mt-4" %>
     <% end %>

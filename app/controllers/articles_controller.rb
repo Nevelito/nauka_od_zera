@@ -10,13 +10,16 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = current_user.articles.new(article_params)
+    # @article = current_user.articles.new(article_params)
+    result = Articles::Create.new(article_params).call
 
-    if @article.save
-      redirect_to @article
+    if result[:success] == true
+      redirect_to articles_path
     else
-      render 'new'
+      flash[:alert] = result[:errors]
+      render :new
     end
+
   end
 
   def show
