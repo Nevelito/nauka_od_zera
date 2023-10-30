@@ -9,11 +9,10 @@ module Articles
       article = Article.new(params)
 
       if article.save
-        result = { success: true, article: article }
+        { success: true, article: article }
       else
-        result = { success: false, errors: article.errors.full_messages }
+        { success: false, errors: article.errors.full_messages }
       end
-      result
     end
   end
 end

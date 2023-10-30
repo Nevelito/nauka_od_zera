@@ -1,18 +1,19 @@
 module Subscriptions
   class Unsubscribe
-    def initialize(params, user,subscription)
+    def initialize(params, user,subscription,article)
       @params = params
       @user = user
       @subscription = subscription
+      @article = article
     end
 
     def call
       cancel_subscription
       cancel_points
-      # cancel_sending_mails
+      cancel_sending_mails
     end
     def cancel_subscription
-      if @subscription!=nil
+      if @subscription
         @subscription.destroy
       else
         # error
@@ -22,14 +23,7 @@ module Subscriptions
       @user.update!(points: @user.points - 10)
     end
     def cancel_sending_mails
-      @article = Article.find(@params[:article_id])
-      result = SubscriptionMailer.delete_subscription_notification(@user, @article)
-
-      if result[:success]
-        # success
-      else
-        # error
-      end
+      SubscriptionMailer.delete_subscription_notification(@user, @article)
     end
   end
 end

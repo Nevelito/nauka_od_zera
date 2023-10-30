@@ -1,19 +1,18 @@
 module Subscriptions
   class Subscribe
-    def initialize(params, user)
+    def initialize(params, user, article)
       @params = params
       @user = user
+      @article = article
     end
 
     def call
       new_subscription
       adding_points
-      #sending_mails
+      sending_mails
     end
     def new_subscription
-      @article = Article.find(@params[:article_id])
-
-      if @article!=nil
+      if @article
         @user.subscribed_articles << @article
       else
         # error
@@ -24,14 +23,7 @@ module Subscriptions
     end
 
     def sending_mails
-      @article = Article.find(@params[:article_id])
-      result = SubscriptionMailer.new_subscription_notification(@user, @article)
-
-      if result[:success]
-        # success
-      else
-        # error
-      end
+      SubscriptionMailer.new_subscription_notification(@user, @article)
     end
   end
 end
