@@ -29,7 +29,6 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find_by(id: params[:id])
-    @article.subscriptions.destroy_all
     @article.destroy
     redirect_to articles_path, notice: "Article was successfully deleted."
   end
@@ -37,6 +36,16 @@ class ArticlesController < ApplicationController
   def edit
     @article = Article.find_by(id: params[:id])
   end
+
+  def my_articles
+    @my_articles = current_user.articles
+  end
+
+  # def subscripted_article
+  #   my_subscriptions = current_user.subscriptions
+  #   @articles = Article.where(id: my_subscriptions.pluck(:article_id))
+  #   binding.pry
+  # end
 
 
   private
