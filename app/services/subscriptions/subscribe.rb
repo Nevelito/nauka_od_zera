@@ -23,7 +23,7 @@ module Subscriptions
     end
 
     def sending_mails
-      SubscriptionMailer.new_subscription_notification(@user, @article)
+      SubscriptionMailer.new_subscription_notification(@user, @article).deliver_now
     end
   end
 end

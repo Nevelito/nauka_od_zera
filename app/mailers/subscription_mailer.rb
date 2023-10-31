@@ -8,5 +8,6 @@ class SubscriptionMailer < ApplicationMailer
     @subscriber = subscriber
     @article = article
     mail(to: subscriber.email, subject: "You unsubscribe article which title is #{article.title}")
+
   end
 end

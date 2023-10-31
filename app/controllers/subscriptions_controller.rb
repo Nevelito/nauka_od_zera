@@ -14,11 +14,11 @@ class SubscriptionsController < ApplicationController
   private
 
   def subscription
-    current_user.subscriptions.find_by(article_id: params[:article_id])
+    @subscription ||= current_user.subscriptions.find_by(article_id: params[:article_id])
   end
 
   def article
-    @article = Article.find_by(id: params[:article_id])
+    @article ||= Article.find_by(id: params[:article_id])
   end
 
 

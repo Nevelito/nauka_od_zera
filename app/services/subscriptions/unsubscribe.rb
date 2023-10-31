@@ -23,7 +23,7 @@ module Subscriptions
       @user.update!(points: @user.points - 10)
     end
     def cancel_sending_mails
-      SubscriptionMailer.delete_subscription_notification(@user, @article)
+      SubscriptionMailer.delete_subscription_notification(@user, @article).deliver_now
     end
   end
 end

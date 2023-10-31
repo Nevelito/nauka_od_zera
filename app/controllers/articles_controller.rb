@@ -27,6 +27,17 @@ class ArticlesController < ApplicationController
     render 'show'
   end
 
+  def destroy
+    @article = Article.find_by(id: params[:id])
+    @article.subscriptions.destroy_all
+    @article.destroy
+    redirect_to articles_path, notice: "Article was successfully deleted."
+  end
+
+  def edit
+    @article = Article.find_by(id: params[:id])
+  end
+
 
   private
 
