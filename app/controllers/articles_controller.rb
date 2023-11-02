@@ -41,11 +41,10 @@ class ArticlesController < ApplicationController
     @my_articles = current_user.articles
   end
 
-  # def subscripted_article
-  #   my_subscriptions = current_user.subscriptions
-  #   @articles = Article.where(id: my_subscriptions.pluck(:article_id))
-  #   binding.pry
-  # end
+  def subscripted_article
+    my_subscriptions = current_user.subscriptions
+    @articles = Article.where(id: my_subscriptions.pluck(:article_id))
+  end
 
 
   private
