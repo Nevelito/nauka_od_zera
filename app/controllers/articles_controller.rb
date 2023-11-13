@@ -6,7 +6,7 @@ class ArticlesController < ApplicationController
   end
 
   def index
-    @articles = Article.all
+    @articles = Article.order(id: :asc)
   end
 
   def create
@@ -24,26 +24,69 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(id: params[:id])
-    render 'show'
+
+    if @article
+      render 'show'
+    else
+      flash[:alert] = "Error showing the article."
+      redirect_to articles_path
+    end
   end
 
   def destroy
     @article = Article.find_by(id: params[:id])
-    @article.destroy
-    redirect_to articles_path, notice: "Article was successfully deleted."
+
+    if @article
+      if @article.destroy
+        redirect_to articles_path, notice: "Article was successfully deleted."
+      else
+        flash[:alert] = "Error deleting the article."
+        redirect_to articles_path
+      end
+    else
+      flash[:alert] = "Article not found."
+      redirect_to articles_path
+    end
   end
 
+
+  def update
+    @article = Article.find(params[:id])
+
+    if @article.update(article_params)
+      redirect_to @article, notice: 'Article was successfully updated.'
+    else
+      render :edit
+    end
+  end
   def edit
     @article = Article.find_by(id: params[:id])
+
+    if @article
+      render 'edit'
+    else
+      flash[:alert] = "Article not found."
+      redirect_to articles_path
+    end
   end
 
   def my_articles
     @my_articles = current_user.articles
+
+    if @my_articles.empty?
+      flash[:notice] = "You have no articles."
+      redirect_to articles_path
+    end
   end
 
   def subscripted_article
     my_subscriptions = current_user.subscriptions
     @articles = Article.where(id: my_subscriptions.pluck(:article_id))
+
+    if @articles.empty?
+      flash[:notice] = "You are not subscribed to any articles."
+      redirect_to articles_path
+    end
   end
 
 
