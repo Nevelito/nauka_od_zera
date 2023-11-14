@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    result = Subscriptions::Subscribe.new(params,current_user,article).call
+    Subscriptions::Subscribe.new(params,current_user,article).call
     redirect_to article, notice: 'Subscribed to the article.'
   end
 
