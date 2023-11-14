@@ -24,13 +24,6 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find_by(id: params[:id])
-
-    if @article
-      render 'show'
-    else
-      flash[:alert] = "Error showing the article."
-      redirect_to articles_path
-    end
   end
 
   def destroy
@@ -56,18 +49,12 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to @article, notice: 'Article was successfully updated.'
     else
+      flash[:alert] = "Article not found."
       render :edit
     end
   end
   def edit
     @article = Article.find_by(id: params[:id])
-
-    if @article
-      render 'edit'
-    else
-      flash[:alert] = "Article not found."
-      redirect_to articles_path
-    end
   end
 
   def my_articles
